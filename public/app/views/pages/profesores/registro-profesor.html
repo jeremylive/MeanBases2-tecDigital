@@ -1,0 +1,110 @@
+<div class="jumbotron" >
+
+<h1 ng-if="teacher.type == 'create'" > Registro Profesor</h1>
+<h1 ng-if="teacher.type == 'edit'" > Editar Usuario</h1>
+
+
+<div>
+		
+	<!--form #formRegistroProfesor="ngForm" (ngSubmit)="onSubmit()"-->
+	<form #formRegistroProfesor="ngForm" ng-submit="teacher.saveTeacher()">
+		<p>
+			<label>Nombre:</label>
+		   	<input type="text" name="nombre" #nombre="ngModel" ng-model="teacher.teacherData.nombre" required
+				placeholder="Ejm: Nombre Apellido">
+		   	<!--span *ngIf="nombre.touched && !nombre.valid" >Escriba su nombre</span-->
+		</p>
+		<p>
+			<label>Carnet:</label>
+		   	<input type="text" name="carnet" #carnet="ngModel" ng-model="teacher.teacherData.carnet" required pattern="[0-9]+"
+				placeholder="Ejm: 2018######">
+		   	<!--span *ngIf="carnet.touched && !carnet.valid" >Escriba su carnet</span-->
+		</p>
+		<p>
+			<label>Institucion academica:</label>
+		   	<input type="text" name="institucion" #institucion="ngModel" ng-model="teacher.teacherData.institucion" 
+				placeholder="Ejm: TEC">
+		   	<!--span *ngIf="institucionAcademica.touched && !institucionAcademica.valid" >Escriba su institucion academica</span-->
+		</p>
+		<p>
+			<label>Escuela:</label>
+		   	<input type="text" name="escuela" #escuela="ngModel" ng-model="teacher.teacherData.escuela"  
+				placeholder="Ejm: Ingeniería en Computación">
+		   	<!--span *ngIf="escuela.touched && !escuela.valid" >Escriba su escuela</span-->
+		</p>
+		<p>
+			<label>Curso:</label>
+		   	<input type="text" name="curso" #curso="ngModel" ng-model="teacher.teacherData.curso" 
+				placeholder="Ejm: Bases II">
+		   	<!--span *ngIf="programaAcademico.touched && !programaAcademico.valid" >Escriba su programa academico</span-->
+		</p>
+		<p>
+			<label>Grupo:</label>
+		   	<input type="text" name="grupo" #grupo="ngModel" ng-model="teacher.teacherData.grupo" 
+				placeholder="Ejm: 1">
+		   	<!--span *ngIf="mallaCurricular.touched && !mallaCurricular.valid" >Escriba su malla curricular</span-->
+		</p>
+		<p>
+			<label>Periodo:</label>
+		   	<input type="text" name="periodo" #periodo="ngModel" ng-model="teacher.teacherData.periodo"  placeholder="2018-I">
+			<!--span *ngIf="materias.touched && !materias.valid" >Escriba su malla curricular</span-->
+		</p>
+		
+		<p>
+			<label ng-if="teacher.type == 'edit'">Nuevo valor:</label>
+		   	<input type="text" name="nuevoValor" #periodo="ngModel" ng-model="teacher.teacherData.nuevoValor" 
+				ng-if="teacher.type == 'edit'">
+			<!--span *ngIf="materias.touched && !materias.valid" >Escriba su malla curricular</span-->
+		</p>
+		<p>
+			<label ng-if="teacher.type == 'edit'">Nuevo grupo:</label>
+		   	<input type="text" name="nuevoGrupo" #periodo="ngModel" ng-model="teacher.teacherData.nuevoGrupo" 
+				ng-if="teacher.type == 'edit'" ng-disabled="grupo.length == 0">
+		</p>
+		<p>
+			<label ng-if="teacher.type == 'edit'">Nuevo periodo:</label>
+		   	<input type="text" name="nuevoPeriodo" #periodo="ngModel" ng-model="teacher.teacherData.nuevoPeriodo" 
+				ng-if="teacher.type == 'edit'" ng-disabled="grupo.length == 0">
+		</p>
+
+		<div class="form-group" >
+			<div class="col-sm-6" >
+				<button type="submit"
+					class="btn btn-success btn-lg btn-block"
+				ng-if="teacher.type == 'create'" >Guardar</button>
+				<button type="submit"
+					class="btn btn-success btn-lg btn-block"
+				ng-if="teacher.type == 'edit'" >Actualizar Campo</button>
+			</div>
+		</div>
+		<button type="submit"
+			class="btn btn-success btn-lg btn-block"
+			ng-if="user.type == 'create'" >Crear usuario</button>
+		
+		
+	</form>
+	
+	<div class="row show-hide-message" ng-show="teacher.message" >
+	<div class="col-sm-6 col-sm-offset-1" >
+
+	<div class="alert alert-info" >
+		{{ teacher.message }}
+	</div>
+
+	</div>
+	</div>
+</div>
+
+<!--div class="col-sum-6 col-sum-offset-6 row-sm-6">
+<div class="listado">
+	<h4>RegistrosHechos</h4>
+	<ul>
+		<li *ngFor="let registroProfesorModel of registrosProfesores">
+			{{registroProfesorModel.nombre}} - {{registroProfesorModel.carnet}} - {{registroProfesorModel.institucionAcademica}} - {{registroProfesorModel.escuela}} - {{registroProfesorModel.programaAcademico}} - {{registroProfesorModel.mallaCurricular}} - {{registroProfesorModel.materias}}
+ 		</li>
+	</ul>
+</div>
+</div-->
+
+
+</div>

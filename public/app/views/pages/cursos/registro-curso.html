@@ -1,0 +1,74 @@
+<div class="jumbotron" >
+
+<h1 ng-if="matter.type == 'create'" > Registro estudiante</h1>
+<h1 ng-if="matter.type == 'edit'" > Editar Estudiante</h1>
+
+
+<div>
+		
+	<form #formRegistroCurso="ngForm" ng-submit="matter.saveMatter()">
+		<p>
+			<label>Nombre curso:</label>
+			<input type="text" name="nombreCurso" #nombreCurso="ngModel" ng-model="matter.matterData.nombreCurso" required
+				placeholder="Ejm: Nombre Apellido">
+		</p>
+		<p>
+			<label ng-if="matter.type == 'create'">Codigo curso:</label>
+			<input ng-if="matter.type == 'create'" type="text" name="codigoCurso" #codigoCurso="ngModel" ng-model="matter.matterData.codigoCurso" required
+				placeholder="Ejm: 2018######">
+		</p>
+		<p>
+			<label> Numero curso:</label>
+			<input type="text" name="numeroCurso" #numeroCurso="ngModel" ng-model="matter.matterData.numeroCurso" required
+				placeholder="Ejm: TEC">
+			<!--select name="institucion" ng-model="student.userData.institucion" ng-options="institucion.institucion for institucion in student.names" required>
+			</select-->
+		</p>
+		<p>
+			<label>Profesor:</label>
+			<input type="text" name="profesor" #profesor="ngModel" ng-model="matter.matterData.profesor" required
+				placeholder="Ejm: Inegieria en Computacion">
+			<!--select name="escuela" ng-model="student.userData.escuela" 
+				ng-options="escuelas.escuela for escuelas in student.userData.institucion.escuelas" required>
+			</select-->
+		</p>
+		<p>
+			<label>Escuela Pertenece:</label>
+			<input type="text" name="escuelaPertenece" #escuelaPertenece="ngModel" ng-model="matter.matterData.escuelaPertenece" required
+				placeholder="Ejm: 410">
+			<!--select name="programa" ng-model="student.userData.programa" 
+			ng-options="programas.programa for programas in student.userData.escuela.programas" required>
+			</select-->
+		</p>
+
+		<!--....-->
+		<div class="form-group" >
+			<div class="col-sm-6" >
+				<button type="submit"
+					class="btn btn-success btn-lg btn-block"
+				ng-if="matter.type == 'create'" >Guardar</button>
+				<button type="submit"
+					class="btn btn-success btn-lg btn-block"
+				ng-if="matter.type == 'edit'" >Actualizar</button>
+			</div>
+		</div>
+		<button type="submit"
+			class="btn btn-success btn-lg btn-block"
+			ng-if="user.type == 'create'" >Crear usuario</button>
+		
+		
+	</form>
+	
+	<div class="row show-hide-message" ng-show="matter.message" >
+	<div class="col-sm-6 col-sm-offset-1" >
+
+	<div class="alert alert-info" >
+		{{ matter.message }}
+	</div>
+
+	</div>
+	</div>
+</div>
+
+
+</div>

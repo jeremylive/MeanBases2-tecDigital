@@ -1,0 +1,55 @@
+<div class="jumbotron" >
+<h1>
+	Estudiante
+</h1>
+
+<div class="jumbotron text-center" ng-show="student.processing" >
+	<span class="glyphicon glyphicon-repeat spinner" > </span>
+	<p> Cargando informacion... </p>
+</div>
+
+<!--label>{{teacher.teacherData}}</label-->
+
+<table class="table table-bordered table-striped" ng-show="student" >
+	<thead>
+	<tr>
+		<th> Nombre</th>
+		<th> Carnet</th>
+		<th> Institucion</th>
+		<th> Escuela</th>
+		<th> Programa</th>
+		<th> Curso</th>
+		<th> Grupo</th>
+		<th> Periodo</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	<tr>
+		<td>{{student.studentData.nombre}}</td>
+		<td>{{student.studentData.carnet}}</td>
+		<td>{{student.studentData.institucion}}</td>
+		<td>{{student.studentData.escuela}}</td>
+		<td>{{student.studentData.programa}}</td>
+
+	</tr>
+	</tbody>
+
+	<tbody >
+	<tr ng-repeat="cursosMatriculados in student.studentData.cursosMatriculados">
+		<td> {{ cursosMatriculados.curso }} </td>
+		<td> {{ cursosMatriculados.grupo }} </td>
+		<td> {{ cursosMatriculados.periodo }} </td>
+
+	</tr>
+	</tbody>
+
+
+</table>
+
+
+</div>
+
+
+
+

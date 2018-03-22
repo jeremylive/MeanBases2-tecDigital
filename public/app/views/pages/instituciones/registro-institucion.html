@@ -1,0 +1,40 @@
+<div class="jumbotron" >
+
+<h1 ng-if="institute.type == 'create'" > Registro Institucion</h1>
+<h1 ng-if="institute.type == 'edit'" > Editar Institucion</h1>
+
+
+<div>
+		
+	<form #formRegistroInstitucion="ngForm" ng-submit="institute.saveInstitute()">
+		<p>
+			<label>Nombre:</label>
+		   	<input type="text" name="institucionAcademica" #nombre="ngModel" ng-model="institute.instituteData.institucionAcademica" required
+				placeholder="Ejm: Nombre Institucion">
+		</p>
+		<p>
+		<div class="form-group" >
+			<div class="col-sm-6" >
+				<button type="submit"
+					class="btn btn-success btn-lg btn-block"
+				ng-if="institute.type == 'create'" >Guardar</button>
+				<button type="submit"
+					class="btn btn-success btn-lg btn-block"
+				ng-if="institute.type == 'edit'" >Actualizar Campo</button>
+			</div>
+		</div>
+		
+		
+	</form>
+	
+	<div class="row show-hide-message" ng-show="institute.message" >
+	<div class="col-sm-6 col-sm-offset-1" >
+
+	<div class="alert alert-info" >
+		{{ institute.message }}
+	</div>
+
+	</div>
+	</div>
+</div>
+</div>

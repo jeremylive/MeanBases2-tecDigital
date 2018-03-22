@@ -1,0 +1,11 @@
+{
+	"name": "MEAN",
+	"main": "server.js",
+	"dependencies": {
+		"morgan": " ~1.9.0",
+		"body-parser": " ~1.18.2",
+		"mongoose": " ~5.0.7",
+		"bcrypt-nodejs": "0.0.3",
+		"express": "~4.16.2"
+	}
+}

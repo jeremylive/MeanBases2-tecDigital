@@ -1,0 +1,34 @@
+<div class="jumbotron" >
+<h1>
+	Curso
+</h1>
+
+<!--p>
+	<label class="col-sm-4 control-label" > {{institute.instituteData}}</label>
+	<label class="col-sm-4 control-label" > Nombre: {{institute.instituteData.institucionAcademica}}</label>
+</p-->
+
+<div class="jumbotron text-center" ng-show="matter.processing" >
+	<span class="glyphicon glyphicon-repeat spinner" > </span>
+	<p> Cargando informacion... </p>
+</div>
+
+<table class="table table-bordered table-striped" ng-show="matter" >
+	<thead>
+	<tr>
+		<th> Curso</th>
+	</thead>
+	
+	<tr>
+		<td> {{ matter.matterData.nombreCurso }} </td>
+	</tr>
+
+	</tbody>
+</table>
+
+
+</div>
+
+
+
+

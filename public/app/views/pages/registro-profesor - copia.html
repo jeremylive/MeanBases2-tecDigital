@@ -1,0 +1,116 @@
+<div class="row col-sm-6 col-sm-offset-3" >
+
+<div class="jumbotron" >
+<h1>Registro Profesor</h1>
+<style>
+	div{
+		float: left;
+	}
+    
+    .listado{
+    	margin-left: 30px;
+    }
+
+    form{
+    	width:  200px;
+    }
+
+    input[type="text"], span{
+    	display: block;
+    	width: 100%;
+    }
+
+</style>
+
+<div>
+		
+	<!--form #formRegistroProfesor="ngForm" (ngSubmit)="onSubmit()"-->
+	<form #formRegistroProfesor="ngForm">
+		<p>
+			<label>Nombre:</label>
+		   	<input type="text" name="Nombre" #nombre="ngModel" [(ngModel)]="RegistroProfesorModel.nombre" required>
+		   	<span *ngIf="nombre.touched && !nombre.valid" >Escriba su nombre</span>
+		</p>
+		<p>
+			<label>Carnet:</label>
+		   	<input type="text" name="Carnet" #carnet="ngModel" [(ngModel)]="RegistroProfesorModel.carnet" required pattern="[0-9]+">
+		   	<span *ngIf="carnet.touched && !carnet.valid" >Escriba su carnet</span>
+		</p>
+		<p>
+			<label>InstitucionAcademica:</label>
+		   	<input type="text" name="InstitucionAcademica" #institucionAcademica="ngModel" [(ngModel)]="RegistroProfesorModel.institucionAcademica" required>
+		   	<span *ngIf="institucionAcademica.touched && !institucionAcademica.valid" >Escriba su institucionAcademica</span>
+		</p>
+		<p>
+			<label>Escuela:</label>
+		   	<input type="text" name="Escuela" #escuela="ngModel" [(ngModel)]="RegistroProfesorModel.escuela" required>
+		   	<span *ngIf="escuela.touched && !escuela.valid" >Escriba su escuela</span>
+		</p>
+		<p>
+			<label>ProgramaAcademico:</label>
+		   	<input type="text" name="ProgramaAcademico" #programaAcademico="ngModel" [(ngModel)]="RegistroProfesorModel.programaAcademico" required>
+		   	<span *ngIf="programaAcademico.touched && !programaAcademico.valid" >Escriba su programaAcademico</span>
+		</p>
+		<p>
+			<label>MallaCurricular:</label>
+		   	<input type="text" name="MallaCurricular" #mallaCurricular="ngModel" [(ngModel)]="RegistroProfesorModel.mallaCurricular" required>
+		   	<span *ngIf="mallaCurricular.touched && !mallaCurricular.valid" >Escriba su mallaCurricular</span>
+		</p>
+		<p>
+			<label>Materias:</label>
+		   	<input type="text" name="Materias" #materias="ngModel" [(ngModel)]="RegistroProfesorModel.materias" required>
+		   	<span *ngIf="mallaCurricular.touched && !mallaCurricular.valid" >Escriba su mallaCurricular</span>
+		</p>
+
+		<input type="submit" value="Guardar" [disabled]="!formRegistroProfesor.form.valid">
+
+	</form>
+</div>
+
+<div class="listado">
+	<h4>RegistrosHechos</h4>
+	<ul>
+		<li *ngFor="let registroProfesorModel of registrosProfesores">
+			{{registroProfesorModel.nombre}} - {{registroProfesorModel.carnet}} - {{registroProfesorModel.institucionAcademica}} - {{registroProfesorModel.escuela}} - {{registroProfesorModel.programaAcademico}} - {{registroProfesorModel.mallaCurricular}} - {{registroProfesorModel.materias}}
+ 		</li>
+	</ul>
+</div>
+
+<div id="content" class="col-lg-10 col-lg-offset-2">
+  <header id="header" class="col-lg-12">
+	  <h1>
+      Progra1 - Bases de datos 2 {{name}}
+	  </h1>
+  </header>
+  <nav id="nav" class="col-lg-12">
+  	<ul>
+  		<li><a [routerLink]="['/registro-profesor']" class="btn btn-lg btn-primary">>RegistrarProfesor</a></li>
+  		<li><a [routerLink]="['/registro-estudiante']" class="btn btn-lg btn-primary">RegistrarEstudiante</a></li>
+  		<li><a [routerLink]="['/matricula']" class="btn btn-lg btn-primary">Matricula</a></li>
+      <li><a [routerLink]="['/ver-estudiantes']" class="btn btn-lg btn-primary">VerEstudiantes</a></li>
+      <li><a [routerLink]="['/ver-profesor']" class="btn btn-lg btn-primary">VerProfesores</a></li>
+  	</ul>
+  </nav>
+  <section id="main" class="col-lg-12">
+  	<h3>Proyecto1 - bases de datos 2</h3>
+  </section>
+  <footer class="col-lg-12">
+  	<p>by Jeremy,Greivin,Gerardo</p>
+  </footer>
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

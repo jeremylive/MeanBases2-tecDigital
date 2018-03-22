@@ -1,0 +1,68 @@
+<div class="jumbotron" >
+
+<h1 ng-if="matter.type == 'create'" > Registro Curso</h1>
+<h1 ng-if="matter.type == 'edit'" > Editar Usuario</h1>
+
+
+<div>
+		
+	<form #formRegistroCurso="ngForm" ng-submit="matter.saveMatter()">
+		<p>
+			<label>Nombre:</label>
+		   	<input type="text" name="nombreCurso" #nombreCurso="ngModel" ng-model="matter.matterData.nombreCurso" required
+				placeholder="Ejm: Curso">
+		</p>
+		<p>
+			<label>Codigo:</label>
+		   	<input type="text" name="codigoCurso" #codigoCurso="ngModel" ng-model="matter.matterData.codigoCurso" required pattern="[0-9]+"
+				placeholder="Ejm: IC-3014">
+		</p>
+		<p>
+			<label>Numero:</label>
+		   	<input type="text" name="numeroCurso" #numeroCurso="ngModel" ng-model="matter.matterData.numeroCurso" 
+				placeholder="Ejm: 3">
+		</p>
+		<p>
+			<label>Profesor:</label>
+		   	<input type="text" name="profesor" #profesor="ngModel" ng-model="matter.matterData.profesor"  
+				placeholder="Ejm: Jose Dolores Navas Su">
+		</p>
+		<p>
+			<label>Escuela que lo imparte:</label>
+		   	<input type="text" name="escuelaI" #escuelaPertenece="ngModel" ng-model="matter.matterData.escuelaPertenece" 
+				placeholder="Ejm: Escuela de ingenieria en computacion">
+		</p>
+		<p>
+			<label>Programa de  la Escuela:</label>
+		   	<input type="text" name="programaEscuela" #programaEscuela="ngModel" ng-model="matter.matterData.programaEscuela" 
+				placeholder="Ejm: Escuela de ingenieria en computacion">
+		</p>
+		<p>
+			<label>Plan:</label>
+		   	<input type="text" name="plan" #plan="ngModel" ng-model="matter.matterData.plan"  placeholder="411">
+		</p>
+
+		<div class="form-group" >
+			<div class="col-sm-6" >
+				<button type="submit"
+					class="btn btn-success btn-lg btn-block"
+				ng-if="matter.type == 'create'" >Guardar</button>
+				<button type="submit"
+					class="btn btn-success btn-lg btn-block"
+				ng-if="matter.type == 'edit'" >Actualizar Campo</button>
+			</div>
+		</div>
+		
+	</form>
+	
+	<div class="row show-hide-message" ng-show="matter.message" >
+	<div class="col-sm-6 col-sm-offset-1" >
+
+	<div class="alert alert-info" >
+		{{ matter.message }}
+	</div>
+
+	</div>
+	</div>
+</div>
+</div>

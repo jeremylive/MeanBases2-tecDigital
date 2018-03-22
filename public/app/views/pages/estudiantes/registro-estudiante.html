@@ -1,0 +1,74 @@
+<div class="jumbotron" >
+
+<h1 ng-if="student.type == 'create'" > Registro estudiante</h1>
+<h1 ng-if="student.type == 'edit'" > Editar Estudiante</h1>
+
+
+<div ng-app="studentCtrl" ng-controller="studentCreateController">
+		
+	<form #formRegistroEstudiante="ngForm" ng-submit="student.saveStudent()">
+		<p>
+			<label>Nombre:</label>
+			<input type="text" name="nombre" #nombre="ngModel" ng-model="student.studentData.nombre" required
+				placeholder="Ejm: Nombre Apellido">
+		</p>
+		<p>
+			<label ng-if="student.type == 'create'">Carnet:</label>
+			<input ng-if="student.type == 'create'" type="text" name="carnet" #carnet="ngModel" ng-model="student.studentData.carnet" required
+				placeholder="Ejm: 2018######">
+		</p>
+		<p>
+			<label>Institucion academica:
+			<!--<input type="text" name="institucion" #institucion="ngModel" ng-model="student.studentData.institucion" required
+				placeholder="Ejm: TEC">
+			-->
+				<select ng-model="student.studentData.institucion" ng-options="item for item in names" required>
+				</select>
+			</label>
+		</p>
+		<p>
+			<label>Escuela:</label>
+			<!-- <input type="text" name="escuela" #escuela="ngModel" ng-model="student.studentData.escuela" required
+				placeholder="Ejm: Inegieria en Computacion"> -->
+			<select ng-model="student.studentData.escuela" ng-options="item for item in names" required>
+				</select>
+		</p>
+		<p>
+			<label>Programa:</label>
+			<input type="text" name="programa" #programa="ngModel" ng-model="student.studentData.programa" required
+				placeholder="Ejm: 410">
+			<!--select name="programa" ng-model="student.userData.programa" 
+			ng-options="programas.programa for programas in student.userData.escuela.programas" required>
+			</select-->
+		</p>
+
+		<div class="form-group" >
+			<div class="col-sm-6" >
+				<button type="submit"
+					class="btn btn-success btn-lg btn-block"
+				ng-if="student.type == 'create'" >Guardar</button>
+				<button type="submit"
+					class="btn btn-success btn-lg btn-block"
+				ng-if="student.type == 'edit'" >Actualizar</button>
+			</div>
+		</div>
+		<button type="submit"
+			class="btn btn-success btn-lg btn-block"
+			ng-if="user.type == 'create'" >Crear usuario</button>
+		
+		
+	</form>
+	
+	<div class="row show-hide-message" ng-show="student.message" >
+	<div class="col-sm-6 col-sm-offset-1" >
+
+	<div class="alert alert-info" >
+		{{ student.message }}
+	</div>
+
+	</div>
+	</div>
+</div>
+
+
+</div>

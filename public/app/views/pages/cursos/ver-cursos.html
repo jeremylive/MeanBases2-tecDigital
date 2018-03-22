@@ -1,0 +1,37 @@
+<div class="page-header" >
+<h1>
+	Cursos
+	<a href="/matters/registro-curso" class="btn btn-default" >
+		<span class="glyphicon glyphicon-plus" > </span>
+		Nuevo Curso
+	</a>
+</h1>
+
+</div>
+
+<!-- MENSAJE DE CARGA -->
+<div class="jumbotron text-center" ng-show="matter.processing" >
+	<span class="glyphicon glyphicon-repeat spinner" > </span>
+	<p> Cargando informacion... </p>
+</div>
+
+<table class="table table-bordered table-striped" ng-show="matter.matters" >
+	<thead>
+	<tr>
+		<th> Nombre</th>
+		<th class="col-sm-1" > </th>
+		</tr>
+	</thead>
+	<tbody>
+
+	<tr ng-repeat="matt in matter.matters" >
+		<td> {{ matt.nombreCurso }} </td>
+		<td class="col-sm-3" >
+		<a ng-href="/matter/{{ matt.nombreCurso }}" class="btn btn-primary"> Ver Datos</a>
+		<a ng-href="/matters/{{ matt.nombreCurso }}" class="btn btn-danger"> Editar</a>
+		<a href="#" ng-click="matter.deleteInstitute(matt.nombreCurso)" class="btn btn-primary"> Borrar</a>
+		</td>
+	</tr>
+
+	</tbody>
+</table>

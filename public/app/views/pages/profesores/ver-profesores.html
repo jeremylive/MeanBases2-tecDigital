@@ -1,0 +1,41 @@
+<div class="page-header" >
+<h1>
+	Profesores
+	<a href="/teachers/registro-profesor" class="btn btn-default" >
+		<span class="glyphicon glyphicon-plus" > </span>
+		Nuevo Profesor
+	</a>
+</h1>
+
+</div>
+
+<!-- MENSAJE DE CARGA -->
+<div class="jumbotron text-center" ng-show="teacher.processing" >
+	<span class="glyphicon glyphicon-repeat spinner" > </span>
+	<p> Cargando informacion... </p>
+</div>
+
+<table class="table table-bordered table-striped" ng-show="teacher.teachers" >
+	<thead>
+	<tr>
+		<th> Nombre</th>
+		<th> Carnet</th>
+		<th class="col-sm-2" > </th>
+		</tr>
+	</thead>
+	<tbody>
+
+	<!-- Ciclo para los usuarios -->
+	<!-- establece a person como la variable que guarda cada documento de la peticion -->
+	<tr ng-repeat="prof in teacher.teachers" >
+		<td> {{ prof.nombre }} </td>
+		<td> {{ prof.carnet }} </td>
+		<td class="col-sm-3" >
+		<a ng-href="/teacher/{{ prof.carnet }}" class="btn btn-primary"> Ver Datos</a>
+		<a ng-href="/teachers/{{ prof.carnet }}" class="btn btn-danger"> Editar</a>
+		<a href="#" ng-click="teacher.deleteTeacher(prof.carnet)" class="btn btn-primary"> Borrar</a>
+		</td>
+	</tr>
+
+	</tbody>
+</table>

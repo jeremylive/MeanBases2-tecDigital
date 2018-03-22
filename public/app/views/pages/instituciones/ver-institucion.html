@@ -1,0 +1,34 @@
+<div class="jumbotron" >
+<h1>
+	Instituciones
+</h1>
+
+<!--p>
+	<label class="col-sm-4 control-label" > {{institute.instituteData}}</label>
+	<label class="col-sm-4 control-label" > Nombre: {{institute.instituteData.institucionAcademica}}</label>
+</p-->
+
+<div class="jumbotron text-center" ng-show="institute.processing" >
+	<span class="glyphicon glyphicon-repeat spinner" > </span>
+	<p> Cargando informacion... </p>
+</div>
+
+<table class="table table-bordered table-striped" ng-show="institute" >
+	<thead>
+	<tr>
+		<th> Institucion</th>
+	</thead>
+	
+	<tr>
+		<td> {{ institute.instituteData.institucionAcademica }} </td>
+	</tr>
+
+	</tbody>
+</table>
+
+
+</div>
+
+
+
+
