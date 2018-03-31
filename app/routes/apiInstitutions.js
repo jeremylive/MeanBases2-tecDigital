@@ -22,7 +22,7 @@ module.exports = function(app, express) {
 	});
 
 
-	// en las rutas que terminan con /students
+	// en las rutas que terminan con /intitutions
 	// ----------------------------------------------------
 	apiRouter.route( '/institutions' )
 		// (POST)          CREANDO UN POST
@@ -33,6 +33,7 @@ module.exports = function(app, express) {
 
 			// establece la informacion de la institucion, a partir del request
 			institution.institucionAcademica = req.body.institucionAcademica;
+			institution.escuelas.escuela = req.body.escuelas.escuela;
 			
 			// guarda la institucion y revisa errores
 			institution.save( function(err) {
@@ -99,6 +100,127 @@ module.exports = function(app, express) {
 				res.json({ message: 'Borrada exitosamente' });
 			});
 		});
+
+
+
+
+
+	//###################################################################################################################
+	apiRouter.route( '/instituciones/escuelas' )
+		
+		// (GET) OBTIENE TODOS Los nombres de intitucion
+		.get(function(req, res) {
+			Institution.aggregate()
+				.project({
+					"institucionAcademica" : "$institucionAcademica",
+					"escuelas" : "$escuelas"
+				})
+				.exec(function(err, institutions){
+					if (err) res.send(err);
+					// retorna los instituciones
+					res.json(institutions);
+				})
+		})
+
+		// (POST)
+		// agrega una escuela a una institucion
+		.post( function(req, res) {
+			Institution.findOne({
+				'institucionAcademica': req.body.instituciones.institucionAcademica,
+			},function(err, resul) {
+				if(err){ 
+					return res.send(err);
+				}
+				else if(resul){
+					for(j in resul.escuelas){
+						if(resul.escuelas[j].escuela == req.body.escuela){
+							return res.json({ success: false, message: 'Ya existen esos datos.' });
+						}
+					}
+				}else{
+					return res.json({ success: false, message: 'No existe la institucion' });
+				}
+
+				Institution.findOneAndUpdate({
+					'institucionAcademica': req.body.instituciones.institucionAcademica
+					},{
+						'$push':{
+							'escuelas':{
+								escuela: req.body.escuela
+							}
+						}
+					},
+					function(err, exists) {
+						if(err){
+							return res.send(err);
+						}
+						else if(!exists){
+							return res.json({ success: false, message: 'No existe la escuela?.' });
+						}
+						else{
+							res.json({ success: true, message: 'Escuela ingresada!' });
+						}
+					}
+				)
+
+			})
+			
+		})
+
+
+		// (PUT) UPDATE a la escuela
+		.put( function(req, res) {
+		// usa el modelo de Institucion para buscar la institucion que se indica
+			Institution.findOneAndUpdate({
+				"institucionAcademica" : req.body.instituciones.institucionAcademica,
+				"escuelas.escuela" : req.body.escuelas.escuela
+				},{
+					'$set':{
+						'escuelas.$.escuela': req.body.nuevaEscuela
+					}
+				},
+				function(err, exists) {
+					if(err){
+						return res.send(err);
+					}
+					else if(exists){
+						res.json({ success: true, message: 'Escuela actualiza!' });
+					}else{
+						res.json({ success: false, message: 'El campo no existe...' });
+					}
+				}
+			)
+		});
+
+
+		//el DELETE no acepta parámetros extra
+		//solo el param del route
+		apiRouter.route( '/instituciones/escuelas/:name' )
+		.delete( function(req, res) {
+			//saco los valores del parámtro, es: 		"institucion-escuela"
+			var valores = req.params.name.split("-");
+
+			Institution.findOneAndUpdate({
+				"institucionAcademica" : valores[0]
+				},{
+					'$pull':{
+						"escuelas": { "escuela" : valores[1] } 
+					}
+				},	
+				function(err, exists) {
+					if(err){
+						return res.send(err);
+					}
+					else if(exists){
+						res.json({ success: true, message: 'Escuela eliminada!' });
+					}else{
+						res.json({ success: false, message: 'El campo no existe...' });
+					}
+				}
+			)
+		});
+
+
 	
 	return apiRouter;
 };

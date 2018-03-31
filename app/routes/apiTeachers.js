@@ -28,6 +28,7 @@ module.exports = function(app, express) {
 		//           CREANDO UN POST
 		// crear un profesor (accedido en POST http://localhost:8080/apiT/teachers)
 		.post( function(req, res) {
+			
 			// establece la informacion del profesor, a partir del request, hace las validaciones pertinentes
 			Teacher.findOne({
 				'nombre': req.body.nombre,
@@ -142,11 +143,6 @@ module.exports = function(app, express) {
 		});
 		
 		
-
-
-
-
-
 	// OBTIENE UN SOLO PROFESOR
 	// en las rutas que terminan con http://localhost:8080/apiT/teachers/:teacher_id
 	// ----------------------------------------------------
@@ -305,6 +301,33 @@ module.exports = function(app, express) {
 				res.json({ message: 'Borrado exitosamente' });
 			});
 		});
+
+
+	//###################################################################################################################
+	//ESTE ES PARA LOS CURSOS!!
+	apiRouter.route( '/teachers/school/:names' )
+		//obtiene todos los profesores de una institucion y escuela
+		.get(function(req, res) {
+			//separo la institucion y la escuela
+			var campos = req.params.names.split("_");	// [institucion, escuela]
+			Teacher.find({
+				'instituciones.institucion': campos[0],
+				'instituciones.escuela': campos[1]
+			},
+			function(err, result) {
+				if (err){
+					res.send(err);
+				}
+				else if(result){
+					// retorna los programas
+					res.json(result);
+				}else{
+					res.json({success: false, message:'No se encontraron profesores.' })
+				}
+			});
+		});
+
+
 	
 	return apiRouter;
 };

@@ -1,7 +1,7 @@
 <div class="page-header" >
 <h1>
 	Cursos
-	<a href="/matters/registro-curso" class="btn btn-default" >
+	<a href="/cursos/registro-curso" class="btn btn-default" >
 		<span class="glyphicon glyphicon-plus" > </span>
 		Nuevo Curso
 	</a>
@@ -10,26 +10,37 @@
 </div>
 
 <!-- MENSAJE DE CARGA -->
-<div class="jumbotron text-center" ng-show="matter.processing" >
+<div class="jumbotron text-center" ng-show="matters.processing" >
 	<span class="glyphicon glyphicon-repeat spinner" > </span>
 	<p> Cargando informacion... </p>
 </div>
 
-<table class="table table-bordered table-striped" ng-show="matter.matters" >
+<table class="table table-bordered table-striped" ng-show="matter.matterData" >
 	<thead>
 	<tr>
-		<th> Nombre</th>
-		<th class="col-sm-1" > </th>
+		<th> Institución</th>
+		<th> Escuela</th>
+		<th> Programa</th>
+		<th> Profesor</th>
+		<th> Materia</th>
+		<th> Grupo</th>
+		<th> Periodo</th>
+		<th class="col-sm-3" > </th>
 		</tr>
 	</thead>
 	<tbody>
 
-	<tr ng-repeat="matt in matter.matters" >
-		<td> {{ matt.nombreCurso }} </td>
-		<td class="col-sm-3" >
-		<a ng-href="/matter/{{ matt.nombreCurso }}" class="btn btn-primary"> Ver Datos</a>
-		<a ng-href="/matters/{{ matt.nombreCurso }}" class="btn btn-danger"> Editar</a>
-		<a href="#" ng-click="matter.deleteInstitute(matt.nombreCurso)" class="btn btn-primary"> Borrar</a>
+	<tr ng-repeat="curso in matter.matterData" >
+		<td> {{ curso.institucion }} </td>
+		<td> {{ curso.escuela }} </td>
+		<td> {{ curso.programa }} </td>
+		<td> {{ curso.profesor }} </td>
+		<td> {{ curso.materia }} </td>
+		<td> {{ curso.grupo }} </td>
+		<td> {{ curso.periodo }} </td>
+		<td>
+			<a href="#" ng-click="matter.borrarCurso(curso._id)" class="btn btn-danger"> Borrar</a>
+			<a ng-href="/cursos/{{ curso._id }}" class="btn btn-primary"> Editar</a>
 		</td>
 	</tr>
 

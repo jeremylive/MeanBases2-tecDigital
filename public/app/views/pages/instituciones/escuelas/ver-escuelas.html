@@ -1,0 +1,45 @@
+<div class="page-header" >
+<h1>
+	Escuelas
+	<a href="/instituciones/registro-escuela" class="btn btn-default" >
+		<span class="glyphicon glyphicon-plus" > </span>
+		Nueva Escuela
+	</a>
+	<a href="/instituciones/actualizar-escuela" class="btn btn-default" >
+		<span class="glyphicon glyphicon-pencil" > </span>
+		Editar Escuela
+	</a>
+</h1>
+
+</div>
+
+<!-- MENSAJE DE CARGA -->
+<div class="jumbotron text-center" ng-show="institution.processing" >
+	<span class="glyphicon glyphicon-repeat spinner" > </span>
+	<p> Cargando informacion... </p>
+</div>
+
+<table class="table table-bordered table-striped" ng-show="institution.instituteData" >
+	<thead>
+	<tr>
+		<th> Institución</th>
+		<th> Escuela</th>
+		<th class="col-sm-2" > </th>
+	</tr>
+	</thead>
+
+	<tbody ng-repeat="institucion in institution.instituteData">
+
+	<tr>
+		<tr ng-repeat="escuelas in institucion.escuelas">
+			<td> {{ institucion.institucionAcademica }} </td>	
+			<td> {{ escuelas.escuela }} </td>
+			<td class="col-sm-1" >
+				<a href="#" ng-click="institution.borrarEscuela(institucion.institucionAcademica, escuelas.escuela)" 
+				class="btn btn-danger"> Borrar</a>
+			</td>
+		</tr>
+	</tr>
+
+	</tbody>
+</table>

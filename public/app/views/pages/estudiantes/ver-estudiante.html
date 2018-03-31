@@ -3,6 +3,14 @@
 	Estudiante
 </h1>
 
+<p>
+	<label class="col-sm-6 control-label" > Nombre: {{student.studentData.nombre}}</label>
+	<label class="col-sm-6 control-label" > Carnet: {{student.studentData.carnet}}</label>
+	<label class="col-sm-6 control-label" > Institucion: {{student.studentData.institucion}}</label>
+	<label class="col-sm-6 control-label" > Escuela: {{student.studentData.escuela}}</label>
+	<label class="col-sm-6 control-label" > Programa: {{student.studentData.programa}}</label>
+</p>
+
 <div class="jumbotron text-center" ng-show="student.processing" >
 	<span class="glyphicon glyphicon-repeat spinner" > </span>
 	<p> Cargando informacion... </p>
@@ -13,40 +21,30 @@
 <table class="table table-bordered table-striped" ng-show="student" >
 	<thead>
 	<tr>
-		<th> Nombre</th>
-		<th> Carnet</th>
-		<th> Institucion</th>
-		<th> Escuela</th>
-		<th> Programa</th>
 		<th> Curso</th>
 		<th> Grupo</th>
 		<th> Periodo</th>
-	</tr>
+		</tr>
 	</thead>
 	
-	<tbody>
+	<tbody ng-repeat="cursos in student.studentData.cursosMatriculados">
 	<tr>
-		<td>{{student.studentData.nombre}}</td>
-		<td>{{student.studentData.carnet}}</td>
-		<td>{{student.studentData.institucion}}</td>
-		<td>{{student.studentData.escuela}}</td>
-		<td>{{student.studentData.programa}}</td>
-
+		<td> {{ cursos.curso }} </td>
+		<td> {{ cursos.grupo }} </td>
+		<td> {{ cursos.periodo }} </td>
+		<td class="col-sm-3" >
+		<a ng-href="/students/matricula/{{student.studentData.carnet}}" class="btn btn-danger"> Editar</a>
+		<a href="#" ng-click="student.deleteCurso(student.studentData.carnet)" class="btn btn-primary"> Borrar</a>
+		</td>
 	</tr>
+
 	</tbody>
-
-	<tbody >
-	<tr ng-repeat="cursosMatriculados in student.studentData.cursosMatriculados">
-		<td> {{ cursosMatriculados.curso }} </td>
-		<td> {{ cursosMatriculados.grupo }} </td>
-		<td> {{ cursosMatriculados.periodo }} </td>
-
-	</tr>
-	</tbody>
-
-
 </table>
 
+<a href="/students/matricula/{{student.studentData.carnet}}" class="btn btn-success btn-lg btn-block">
+	<span class="glyphicon glyphicon-plus"> </span>
+	Matricula Estudiante
+</a>
 
 </div>
 

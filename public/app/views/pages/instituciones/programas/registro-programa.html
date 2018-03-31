@@ -1,0 +1,66 @@
+<div class="jumbotron" >
+
+<h1 ng-if="program.type == 'create'" > Registro Programa</h1>
+<h1 ng-if="program.type == 'edit'" > Actualizar Programa</h1>
+
+
+
+<div>
+		
+	<form ng-submit="program.guardarPrograma()">
+		<p>
+			<label>Institución:</label>
+
+			<select ng-if="program.type == 'create'" name="institucion" ng-model="program.data.instituciones" ng-options="instituciones.institucionAcademica for instituciones in program.instituteData" required>
+			</select>
+
+			<label ng-if="program.type == 'edit'">{{ program.programData.institucion }}</label>
+		</p>
+		<p>
+			<label>Escuela:</label>
+
+			<select ng-if="program.type == 'create'" name="escuela" ng-model="program.data.escuelas" ng-options="escuelas.escuelas.escuela for escuelas in program.instituteData" required>
+			</select>
+
+			<label ng-if="program.type == 'edit'">{{ program.programData.escuela }}</label>
+		</p>
+		<p>
+			<label>Programa:</label>
+			
+			<input ng-if="program.type == 'create'" type="number" step="1" no-float min="1" name="programa" #nombre="ngModel" ng-model="program.data.programa" required placeholder="Ejm: 410">
+
+			<label ng-if="program.type == 'edit'">{{ program.programData.programa }}</label>
+		</p>
+		<p ng-if="program.type == 'edit'">
+			<label>Nuevo Valor:</label>
+
+			<input ng-if="program.type == 'edit'" type="number" step="1" no-float min="1" name="nuevoPrograma" #nuevoPrograma="ngModel" ng-model="program.programData.nuevoPrograma" required placeholder="Ejm: 410">
+		</p>
+
+		<div class="form-group" >
+			<div class="col-sm-6" >
+				<button type="submit"
+					class="btn btn-success btn-lg btn-block"
+				ng-if="program.type == 'create'" >Guardar</button>
+				<button type="submit"
+					class="btn btn-success btn-lg btn-block"
+				ng-if="program.type == 'edit'" >Actualizar</button>
+			</div>
+		</div>
+		
+		
+	</form>
+	
+	<div class="row show-hide-message" ng-show="program.message" >
+	<div class="col-sm-6 col-sm-offset-1" >
+
+	<div class="alert alert-info" >
+		{{ program.message }}
+	</div>
+
+	</div>
+	</div>
+</div>
+
+
+</div>

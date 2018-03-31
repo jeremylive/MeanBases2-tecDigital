@@ -15,5 +15,8 @@ angular.module( 'userApp' , [
 	'instituteService',
 	//CURSOS
 	'matterCtrl' ,
-	'matterService'
+	'matterService',
+	//PROGRAMAS
+	'programCtrl' ,
+	'programService'
 ]);

@@ -1,0 +1,75 @@
+<div class="jumbotron" >
+
+<h1> Editar Curso </h1>
+
+
+<div class="jumbotron text-center" ng-show="matter.processing" >
+	<span class="glyphicon glyphicon-repeat spinner" > </span>
+	<p> Cargando informacion... </p>
+</div>
+
+<form ng-submit="matter.actualizarCurso()">
+	<hr flex/> <!-- esta carajada es para dibujar una línea horizontal -->
+	<p>
+		<label>Institución:</label>
+		<label>{{ matter.matterData.institucion }}</label>
+
+		<label class="col-sm-offset-2">Escuela:</label>
+		<label>{{ matter.matterData.escuela }}</label>
+	</p>
+	<p>
+		<label>Programa:</label>
+		<label>{{ matter.matterData.programa }}</label>
+
+		<label class="col-sm-offset-2">Materia:</label>
+		<label>{{ matter.matterData.materia }}</label>
+
+		<label class="col-sm-offset-2">Profesor:</label>
+		<label>{{ matter.matterData.profesor }}</label>
+	</p>
+	<hr flex/> <!-- esta carajada es para dibujar una línea horizontal -->
+	<p>
+		<label>Materia:</label>
+		<select name="materia" ng-model="matter.matterData.materias" ng-options="materias.materia for materias in matter.matterData.mallas.mallaCurricular" required>
+		</select>
+	</p>
+	<p>
+		<label>Profesor:</label>
+		<select name="profesor" ng-model="matter.matterData.profesores" ng-options="profesores.nombre for profesores in matter.matterData.teacherData" required>
+		</select>
+	</p>
+	<p>
+		<label>Grupo:</label>
+	   	<input type="number" step="1" no-float min="1" name="grupo" #grupo="ngModel" 
+	   	ng-model="matter.matterData.grupo" placeholder="Ejm: 1" required>
+	</p>
+	<p>
+		<label>Periodo:</label>
+	   	<input type="text" name="periodo" #periodo="ngModel" ng-model="matter.matterData.periodo"  placeholder="Ejm: 2018-I" required>
+	</p>
+
+	<div class="form-group" >
+		<div class="col-sm-6" >
+			<button type="submit" class="btn btn-success btn-lg btn-block">Actualizar</button>
+		</div>
+	</div>
+	
+</form>
+
+
+<div class="row show-hide-message" ng-show="matter.message" >
+	<div class="col-sm-6 col-sm-offset-1" >
+
+	<div class="alert alert-info" >
+		{{ matter.message }}
+	</div>
+
+	</div>
+</div>
+
+
+</div>
+
+
+
+

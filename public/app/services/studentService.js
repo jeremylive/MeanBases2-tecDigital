@@ -1,5 +1,6 @@
 angular.module( 'studentService' , [])
 
+
 	.factory( 'Student' , function($http) {
 		var studentFactory = {};
 		
@@ -14,12 +15,12 @@ angular.module( 'studentService' , [])
 		};
 
 		// crea un estudiante
-		studentFactory.create = function(studentData) {
-			return $http.post( '/apiS/students/' , studentData);
+		studentFactory.create = function(teacherData) {
+			return $http.post( '/apiS/students/' , teacherData);
 		};
 
 		// actualiza un estudiante
-		studentFactory.update = function(id, teacherData) {
+		studentFactory.update = function(id, studentData) {
 			return $http.put( '/apiS/students/' + id, studentData);
 		};
 
@@ -27,6 +28,20 @@ angular.module( 'studentService' , [])
 		studentFactory.delete = function(id) {
 			return $http.delete( '/apiS/students/' + id);
 		};
-		
+		////////////////////////
+		studentFactory.nombresInstituciones = function(){
+			// hace un get al api de instituciones
+			return $http.get( '/apiI/instituciones/escuelas' );
+		}
+		//
+		studentFactory.nombresEscuelas = function(){
+			return $http.get( '/apiP/instituciones/programas' );
+		}
+		//
+		studentFactory.nombresProgramas = function(){
+			return $http.get( '/apiP/instituciones/programas' );
+		}
+		//
+
 		return studentFactory;
 	})

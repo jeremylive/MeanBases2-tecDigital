@@ -1,0 +1,61 @@
+<div class="jumbotron" >
+
+<h1> Matricula Estudiante</h1>
+
+<div>
+		
+	<form #formRegistroEstudiante="ngForm" ng-submit="student.saveStudent()">
+
+		<p>
+			<label class="col-sm-6 control-label" > Nombre: {{student.studentData.nombre}}</label>
+			<label class="col-sm-6 control-label" > Carnet: {{student.studentData.carnet}}</label>
+			<label class="col-sm-6 control-label" > Institucion: {{student.studentData.institucion}}</label>
+			<label class="col-sm-6 control-label" > Escuela: {{student.studentData.escuela}}</label>
+			<label class="col-sm-6 control-label" >Programa: {{student.studentData.programa}}</label>
+		</p>
+
+		<p>
+			<label>Curso</label>
+			<input type="text" name="curso" #nombre="ngModel" ng-model="student.studentData.cursosMatriculados.curso" required placeholder="Ejm: 410">
+
+			<select name="materia1" ng-model="student.studentData.cursosMatriculados.curso" ng-options="techers.instituciones.cursos.curso for techers in student.teacherData" required>
+			</select>
+		</p>
+
+		<p>
+			<label>Grupo</label>	
+			<input type="number" name="grupo" #nombre="ngModel" ng-model="student.studentData.cursosMatriculados.grupo" required placeholder="Ejm: 2">
+
+			<select name="grupo1" ng-model="student.studentData.cursosMatriculados.grupo" ng-options="techers.instituciones.cursos.grupo for techers in student.teacherData" required>
+			</select>
+		</p>
+
+		<p>
+			<label>Periodo</label>
+			<input type="text" name="periodo" #nombre="ngModel" ng-model="student.studentData.cursosMatriculados.periodo" required placeholder="Ejm: 1">
+
+			<select name="periodo1" ng-model="student.studentData.cursosMatriculados.periodo" ng-options="techers.instituciones.cursos.periodo for techers in student.teacherData" required>
+			</select>
+
+		</p>
+
+		<div class="form-group" >
+			<div class="col-sm-6" >
+				<button ng-click="matricular()" type="submit"
+					class="btn btn-success btn-lg btn-block">Realizar Matricula
+				</button>
+			</div>
+		</div>
+
+	</form>
+	
+	<div class="row show-hide-message" ng-show="student.message" >
+		<div class="col-sm-6 col-sm-offset-1" >
+			<div class="alert alert-info" >
+			{{ student.message }}
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>

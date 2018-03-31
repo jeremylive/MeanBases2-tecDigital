@@ -8,48 +8,95 @@ module.exports = function(app, express) {
 	// obtiene la instancia
 	var apiRouter = express.Router();
 
-	// middleware que se usa con todas las peticiones
-	apiRouter.use( function(req, res, next) {
-		// aqu� es donde se autenticar�a
 
-		next(); // se asegura avanzar de ruta y no quedarse aqu�
-	});
-
-	// prueba la ruta para asegurarse que todo bretea bien
-	// accessado en GET http://localhost:8080/apiS
-	apiRouter.get( '/' , function(req, res) {
-		res.json({ message: 'Este es el apiI de los cursos' });
-	});
-
-
-	// en las rutas que terminan con /students
+	// en las rutas que terminan con /matters
 	// ----------------------------------------------------
 	apiRouter.route( '/matters' )
-		// (POST)          CREANDO UN POST
-		// crear un estudiante (accedido en POST http://localhost:8080/apiS/students)
+		// (POST) crea un curso
 		.post( function(req, res) {
-			// crea una nueva instancia del modelo Student
-			var matter = new Matter();
+			// crea una nueva instancia del modelo de curso
 
-			// establece la informacion de la institucion, a partir del request
-			matter.nombreCurso = req.body.nombreCurso;
-			
-			// guarda la institucion y revisa errores
-			matter.save( function(err) {
-				if (err) {
-					// ingreso duplicado
-					if (err.code == 11000)
-						return res.json({ success: false, message: 'Existe un curso con ese nombre. ' 
+			Matter.findOne({
+				'institucion' : req.body.institucion,
+				'escuela' : req.body.escuela,
+				'programa' : req.body.programa,
+				'materia' : req.body.materia,
+				'profesor' : req.body.profesor,
+				'grupo' : req.body.grupo,
+				'periodo' : req.body.periodo
+			},function(error, result){
+				if(error){
+					res.send(error);
+				}else if(result){
+					res.json({ success: false, message: 'El curso ya existe' });
+				}else{
+					var matter = new Matter();
+
+					// establece la informacion del curso
+					matter.institucion = req.body.institucion;
+					matter.escuela = req.body.escuela;
+					matter.programa = req.body.programa;
+					matter.materia = req.body.materia;
+					matter.profesor = req.body.profesor;
+					matter.grupo = req.body.grupo;
+					matter.periodo = req.body.periodo;
+					
+					// guarda la institucion y revisa errores
+					matter.save( function(err) {
+						if (err) {
+							return res.send(err);
+						}else{
+							res.json({ message: 'Curso creado!' });
+						}
 					});
-				else
-					return res.send(err);
 				}
+			});	
+		})
 
-				res.json({ message: 'Curso creado!' });
+
+		// (PUT) UPDATE el curso con ese nombre
+		.put( function(req, res) {
+			// usa el modelo de Curso para buscar el curso que se indica
+
+			Matter.findOne({
+				'institucion' : req.body.institucion,
+				'escuela' : req.body.escuela,
+				'programa' : req.body.programa,
+				'materia' : req.body.materia,
+				'profesor' : req.body.profesor,
+				'grupo' : req.body.grupo,
+				'periodo' : req.body.periodo
+			},function(error, result){
+				if(error){
+					res.send(error);
+				}else if(result){
+					res.json({ success: false, message: 'El curso ya existe' });
+				}else{
+					Matter.findOneAndUpdate({
+						'_id': req.body.id 
+					},{
+						$set:{
+							'materia' : req.body.materia,
+							'profesor' : req.body.profesor,
+							'grupo' : req.body.grupo,
+							'periodo' : req.body.periodo
+						}
+					}, function(err, result){
+						if (err){
+							res.send(err);
+						}
+						else if(result){
+							res.json({ message: 'Curso actualizado!' });
+						}else{
+							res.json({ message: 'El campo no existe...' });
+						}
+					});
+				}
 			});
 		})
+
 		
-		// (GET) OBTIENE TODOS LAS INSTITUCIONES (accessed at GET http://localhost:8080/apiI/institutions)
+		// (GET) OBTIENE TODOS LOS CURSOS
 		.get(function(req, res) {
 			Matter.find( function(err, matters) {
 				if (err) res.send(err);
@@ -59,44 +106,31 @@ module.exports = function(app, express) {
 		});
 		
 		
-	// OBTIENE UNA SOLA INSTITUCION
-	// en las rutas que terminan con http://localhost:8080/apiI/institutions/:name
+	// OBTIENE UN SOLO CURSO
 	// (GET) ------------------------------------------------
-	apiRouter.route( '/matters/:name' )
-		// obtiene la matter con ese nombre
+	apiRouter.route( '/matters/:id' )
+		// obtiene el curso con ese nombre
 		.get( function(req, res) {
-			Matter.findOne({ 'nombreCurso':req.params.name },function(err, matter){
-				if (err) res.send(err);
-				// retorna la institucion
-				res.json(matter);
-			});
-		})
-		
-		// (PUT) UPDATE la institucion con ese nombre
-		.put( function(req, res) {
-		// usa el modelo de Institucion para buscar la institucion que se indica
-			Matter.findOne({ 'nombreCurso': req.params.name }, function(err, matter){
-				if (err) res.send(err);
-
-				// actualiza la info solo si el contenido es nuevo
-				if (req.body.nombreCurso) matter.nombreCurso = req.body.nombreCurso;
-
-				// guarda la institucion
-				matter.save( function(err) {
-					if (err) res.send(err);
-					// return a message
-					res.json({ message: 'Curso actualizado!' });
-				});
+			Matter.findOne({
+				'_id': req.params.id
+			},function(err, result){
+				if (err){
+					res.send(err);
+				} 
+				else{
+					// retorna el curso
+					res.json(result);
+				}
 			});
 		})
 
-		// DELETE el estudiante con ese id
+		// DELETE el curso con ese id
 		.delete( function(req, res) {
 			Matter.remove({
-				'nombreCurso': req.params.name
+				'_id': req.params.id
 			}, function(err, matter) {
 				if (err) return res.send(err);
-				res.json({ message: 'Borrada exitosamente' });
+				res.json({ message: 'Curso borrado!' });
 			});
 		});
 	

@@ -88,13 +88,88 @@ module.exports = function(app, express) {
 				if (req.body.escuela) student.escuela = req.body.escuela;
 				if (req.body.programa) student.programa = req.body.programa;
 
+				if (req.body.cursosMatriculados.curso) student.cursosMatriculados.curso = req.body.cursosMatriculados.curso;
+				if (req.body.cursosMatriculados.grupo) student.cursosMatriculados.grupo = req.body.cursosMatriculados.grupo;
+				if (req.body.cursosMatriculados.periodo) student.cursosMatriculados.periodo = req.body.cursosMatriculados.periodo;
+
+				var escuela = req.body.escuela;
+				var carnet = req.body.carnet;
+				var institucion = req.body.institucion;
+				var curso = req.body.cursosMatriculados.curso;
+				var grupo = req.body.cursosMatriculados.grupo;
+				var periodo = req.body.cursosMatriculados.periodo;
+
+				if(curso && grupo && periodo){
+					Student.findOneAndUpdate({
+						'carnet': carnet,
+						'institucion': institucion,
+						'escuela': escuela},
+						{
+							'$pull':{
+								'cursosMatriculados':{ 
+									'curso': curso,
+									'grupo': grupo,
+									'periodo': periodo
+								}
+							},
+						},
+						function(err, exists) {
+							if(err) return res.send(err);
+							else if(!exists) return res.json({ success: false, message: 'El campo en cursos no existe.' });
+							else{
+								//var existe = false;
+								//revisa que no existan ya esos valores
+								if(exists.institucion == institucion &&
+									exists.escuela == escuela){
+									for(j in exists.cursosMatriculados){
+										if(exists.cursosMatriculados[j].curso == curso && 
+											exists.cursosMatriculados[j].grupo == grupo && 
+											exists.cursosMatriculados[j].periodo == periodo){
+											//existe = true;
+											//return res.json({ success: false, message: 'Ya se han ingresado esos datos' });
+										}
+									}
+								}
+								
+								//si no existen los valores, los ingresa
+								//if(!existe){
+									Student.findOneAndUpdate({
+										'carnet': carnet,
+										'institucion': institucion,
+										'escuela': escuela},
+										{
+											'$push':{
+												'cursosMatriculados':{
+													curso: curso,
+													grupo: grupo,
+													periodo: periodo
+												}
+											}
+										},
+										function(err, exists) {
+											if(err) return res.send(err);
+											else if(!exists) return res.json({ success: false, message: 'El campo en cursos no existe.' });
+										}
+									)
+									return res.json({message: 'Curso, grupo y periodo actualizado.' });
+								//}
+							}
+						}
+					)
+				
+				}else{
+					return res.json({ success: false, message: 'Error. Cruso, grupo y periodo deben ser ingresados juntos.' });
+				}
+
 				// guarda el estudiante
 				student.save( function(err) {
 					if (err) res.send(err);
 					// return a message
+
 					res.json({ message: 'Estudiante actualizado!' });
 				});
 			});
+
 		})
 
 		// DELETE el estudiante con ese id
@@ -105,7 +180,27 @@ module.exports = function(app, express) {
 				if (err) return res.send(err);
 				res.json({ message: 'Borrado exitosamente' });
 			});
+		})
+
+		// DELETE el curso, grupo, periodo de estudiante con ese id
+		.deleteMateria( function(req, res) {
+			Student.findOne({
+				'carnet': req.params.student_id
+			}, function(err, student) {
+				if (err) return res.send(err);
+
+				Student.remove({
+				'cursosMatriculados': req.body.cursosMatriculados
+				}, function(err, student) {
+					if (err) return res.send(err);
+
+					res.json({ message: 'Borrado exitosamente' });
+				});
+
+			});
 		});
+
+
 	
 	return apiRouter;
 };

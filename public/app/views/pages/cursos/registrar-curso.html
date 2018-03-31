@@ -6,40 +6,45 @@
 
 <div>
 		
-	<form #formRegistroCurso="ngForm" ng-submit="matter.saveMatter()">
+	<form #formRegistroCurso="ngForm" ng-submit="matter.guardarCurso()">
+
+		<hr flex/> <!-- esta carajada es para dibujar una línea horizontal -->
 		<p>
-			<label>Nombre:</label>
-		   	<input type="text" name="nombreCurso" #nombreCurso="ngModel" ng-model="matter.matterData.nombreCurso" required
-				placeholder="Ejm: Curso">
+			<label>Institución:</label>
+			<select name="institucion" ng-model="matter.matterData.instituciones" ng-options="instituciones.institucionAcademica for instituciones in matter.instituteData" required>
+			</select>
+
+			<label class="col-sm-offset-1">Escuela:</label>
+			<select name="escuela" ng-model="matter.matterData.escuelas" ng-options="escuelas.escuela for escuelas in matter.instituteData" required>
+			</select>
+
+			<a href="#" ng-click="matter.cargarDatos()" class="btn btn-primary col-sm-offset-1">Cargar Datos</a>
+		</p>
+		<hr flex/> <!-- esta carajada es para dibujar una línea horizontal -->
+		
+		<p>
+			<label>Programa:</label>
+			<select name="programa" ng-model="matter.matterData.programData.programas" ng-options="programas.programa for programas in matter.matterData.programData" required>
+			</select>
 		</p>
 		<p>
-			<label>Codigo:</label>
-		   	<input type="text" name="codigoCurso" #codigoCurso="ngModel" ng-model="matter.matterData.codigoCurso" required pattern="[0-9]+"
-				placeholder="Ejm: IC-3014">
-		</p>
-		<p>
-			<label>Numero:</label>
-		   	<input type="text" name="numeroCurso" #numeroCurso="ngModel" ng-model="matter.matterData.numeroCurso" 
-				placeholder="Ejm: 3">
+			<label>Materia:</label>
+			<select name="materia" ng-model="matter.matterData.programData.materias" ng-options="materias.materia for materias in matter.matterData.programData.programas.mallaCurricular" required>
+			</select>
 		</p>
 		<p>
 			<label>Profesor:</label>
-		   	<input type="text" name="profesor" #profesor="ngModel" ng-model="matter.matterData.profesor"  
-				placeholder="Ejm: Jose Dolores Navas Su">
+			<select name="profesor" ng-model="matter.matterData.programData.profesores" ng-options="profesores.nombre for profesores in matter.matterData.teacherData" required>
+			</select>
 		</p>
 		<p>
-			<label>Escuela que lo imparte:</label>
-		   	<input type="text" name="escuelaI" #escuelaPertenece="ngModel" ng-model="matter.matterData.escuelaPertenece" 
-				placeholder="Ejm: Escuela de ingenieria en computacion">
+			<label>Grupo:</label>
+		   	<input type="number" step="1" no-float min="1" name="grupo" #grupo="ngModel" 
+		   	ng-model="matter.matterData.programData.grupo" placeholder="Ejm: 1" required>
 		</p>
 		<p>
-			<label>Programa de  la Escuela:</label>
-		   	<input type="text" name="programaEscuela" #programaEscuela="ngModel" ng-model="matter.matterData.programaEscuela" 
-				placeholder="Ejm: Escuela de ingenieria en computacion">
-		</p>
-		<p>
-			<label>Plan:</label>
-		   	<input type="text" name="plan" #plan="ngModel" ng-model="matter.matterData.plan"  placeholder="411">
+			<label>Periodo:</label>
+		   	<input type="text" name="periodo" #periodo="ngModel" ng-model="matter.matterData.programData.periodo"  placeholder="Ejm: 2018-I" required>
 		</p>
 
 		<div class="form-group" >

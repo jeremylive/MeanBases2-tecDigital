@@ -42,6 +42,8 @@ var apiInstitutionsRoutes = require( './app/routes/apiInstitutions' )(app, expre
 app.use( '/apiI' , apiInstitutionsRoutes);
 var apiMattersRoutes = require( './app/routes/apiMatters' )(app, express);
 app.use( '/apiM' , apiMattersRoutes);
+var apiProgramsRoutes = require( './app/routes/apiPrograms' )(app, express);
+app.use( '/apiP' , apiProgramsRoutes);
 
 // MAIN CATCHALL ROUTE ---------------
 // MANDA A TODOS LOS USUARIOS AL FRONTEND------------

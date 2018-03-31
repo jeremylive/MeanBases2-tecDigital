@@ -11,13 +11,11 @@ var studentSchema = new Schema({
 	escuela: { type: String, required: true},
 	programa: { type: String, required: true},
 	cursosMatriculados: [ new Schema({
-		curso: { type: String, required: true},
-		grupo: { type: Number, required: true},
-		periodo: { type: String, required: true}
+		curso: String,
+		grupo: Number,
+		periodo: String
 	})]
 });
 
 // RETORNA EL MODELO------------------------------------------------------------------------------------
 module.exports = mongoose.model( 'Student' , studentSchema);
-/*const studentModelo = mongoose.model( 'Student' , studentSchema);
-module.exports = studentModelo;*/

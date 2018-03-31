@@ -1,0 +1,44 @@
+<div class="page-header" >
+<h1>
+	Programas
+	<a href="/instituciones/registro-programa" class="btn btn-default" >
+		<span class="glyphicon glyphicon-plus" > </span>
+		Nuevo Programa
+	</a>
+</h1>
+
+</div>
+
+<!-- MENSAJE DE CARGA -->
+<div class="jumbotron text-center" ng-show="program.processing" >
+	<span class="glyphicon glyphicon-repeat spinner" > </span>
+	<p> Cargando informacion... </p>
+</div>
+
+<table class="table table-bordered table-striped" ng-show="program.programData" >
+	<thead>
+	<tr>
+		<th> Institución</th>
+		<th> Escuela</th>
+		<th> Programa</th>
+		<th class="col-sm-3" > </th>
+	</tr>
+	</thead>
+
+	<tbody>
+
+	<tr>
+		<tr ng-repeat="programa in program.programData">
+			<td> {{ programa.institucion }} </td>	
+			<td> {{ programa.escuela }} </td>
+			<td> {{ programa.programa }} </td>
+			<td class="col-sm-4" >
+				<a href="/instituciones/ver-malla/{{programa._id}}" class="btn btn-primary"> Ver Malla</a>
+				<a href="#" ng-click="program.borrarPrograma(programa._id)" class="btn btn-danger"> Borrar</a>
+				<a href="/instituciones/actualizar-programa/{{programa._id}}" class="btn btn-primary"> Editar</a>
+			</td>
+		</tr>
+	</tr>
+
+	</tbody>
+</table>

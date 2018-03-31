@@ -1,109 +1,162 @@
-// comienza el modulo de angular e inyecta el studentService
+// comienza el modulo de angular e inyecta el programService
 angular.module( 'matterCtrl' , [ 'matterService' ])
 
-	// student controller para la p�gina principal
-	// inyecta el Institute Factory
-	.controller( 'matterController' , function(Matter) {
 
+	//###################################################################################################################
+	.controller('matterController' , function(Matters){
 		var vm = this;
-		console.log('');
 
 		// establece la variable processing para mostrar las varas de carga
 		vm.processing = true;
 
-		// agarra todos los estudiantes de la pagina de carga
-		Matter.all()
+		// carga todos los cursos
+		Matters.all()
 		.success( function(data) {
-
-			// cuando tiene todos los estudiantes, borra la variable processing
 			vm.processing = false;
-
-			// asigna los estudiantes para volver a vm.teachers
-			vm.matters = data;
-		});
-		
-		// funcion para borrar un estudiante
-		vm.deleteMatter = function(name) {
-			vm.processing = true;
-
-			// acepta el id de estudiante como parametro
-			Matter.delete(name)
-			.success(function(data) {
-
-				// toma todos los estudiantes para actualizar la tabla
-				Matter.all()
-				.success( function(data) {
-					vm.processing = false;
-					vm.matters = data;
-				});
-
-			});
-		};
-
-	})
-	
-	// controlador aplicado para la pagina crear estudiante
-	.controller( 'matterCreateController' , function(Matter) {
-
-		var vm = this;
-
-		// variable para mostrar/ocultar los elementos de la vista
-		// es lo que diferencia entre crear o editar en el html
-		vm.type = 'create' ;
-
-		// funcion para crear un estudiante
-		vm.saveMatter = function() {
-			vm.processing = true;
-
-			// limpia el mensaje
-			vm.message = '' ;
-
-			// usa la funcion de crear en studentService
-			Matter.create(vm.matterData)
-			.success( function(data) {
-				vm.processing = false;
-
-				// limpia el formulario
-				//vm.matterData = {};
-				vm.message = data.message;
-			});
-
-		};
-
-	})
-	
-	// controlador aplicado para la pagina editar estudiante
-	.controller( 'matterEditController' , function($routeParams, Matter) {
-
-		var vm = this;
-
-		// variable para mostrar/ocultar los elementos de la vista
-		// es lo que diferencia entre crear o editar en el html
-		vm.type = 'edit' ;
-
-		// obtiene el parametro con la informacion de estudiantes a editar
-		// $routeParams es la herramienta para agarrar la info del URL
-		Matter.get($routeParams.name)
-		.success( function(data) {
 			vm.matterData = data;
 		});
+		
+		// funcion para borrar un programa
+		vm.borrarCurso = function(id) {
+			vm.processing = true;
 
-		// funcion para guardar el estudiante
-		vm.saveMatter = function() {
+			Matters.borrarCurso(id)
+			.success(function(data) {
+				vm.processing = false;
+
+				//refresco los valores
+				Matters.all()
+				.success( function(data) {
+					vm.matterData = data;
+				});
+			});
+		};
+	})
+
+	// controlador para CREAR UN CURSO
+	.controller( 'matterCreateController' , function(Matters) {
+
+		var vm = this;
+
+		//busco los nombres de las instituciones
+		vm.instituteData = {};
+		Matters.nombresInstituciones()
+		.success( function(data){
+			vm.instituteData = data;
+			console.log(JSON.stringify(data))
+		});
+
+		vm.matterData = {};
+
+		vm.cargarDatos = function(){
+			//obtiene los programas de esa institucion y escuela
+			//paso a string los valores de institucion y esucela a buscar
+			var nombres = vm.matterData.instituciones.institucionAcademica +"_"+ vm.matterData.escuelas.escuela 
+			Matters.getProgramas(nombres)
+			.success( function(data) {
+				vm.matterData.programData = data;
+
+			});
+
+			//obtiene los profesores de esa institucion y escuela
+			Matters.getProfesores(nombres)
+			.success( function(resul){
+				vm.matterData.teacherData = resul;
+			});
+		}
+
+
+		vm.data = {};
+
+		// funcion para guardar el nuevo programa
+		vm.guardarCurso = function() {
 			vm.processing = true;
 			vm.message = '' ;
 
-			// llama al studentService para actualizar
-			Matter.update($routeParams.name, vm.matterData)
+
+			//acomodo todos los valores ingresados en una variable
+			vm.data = {}
+			vm.data.institucion = vm.matterData.programData.programas.institucion;
+			vm.data.escuela = vm.matterData.programData.programas.escuela;
+			vm.data.programa = vm.matterData.programData.programas.programa;
+			vm.data.materia = vm.matterData.programData.materias.materia;
+			vm.data.profesor = vm.matterData.programData.profesores.nombre;
+			vm.data.grupo = vm.matterData.programData.grupo;
+			vm.data.periodo = vm.matterData.programData.periodo;
+
+			// llama al matterService para guardar
+			Matters.crearCurso(vm.data)
 			.success( function(data) {
 				vm.processing = false;
-
-				// limpia el formulario
-				//vm.matterData = {};
-
-				// asigna el mensaje de la API a vm.message
 				vm.message = data.message;
 			});
 		};
 
-	});
+	})
+
+	// controlador para EDITAR UN CURSO
+	.controller( 'matterEditController' , function($routeParams,Matters) {
+
+		var vm = this;
+
+		vm.processing = true;
+
+		// obtiene el parametro con el id del curso
+		// $routeParams es la herramienta para agarrar la info del URL
+		Matters.get($routeParams.id)
+		.success( function(data) {
+			vm.matterData = data;
+
+			//ordeno los datos a usar en el apiT
+			var teacherData = vm.matterData.institucion +"_"+ vm.matterData.escuela;
+			//obtiene los profesores de esa institucion y escuela
+			Matters.getProfesores(teacherData)
+			.success( function(resul){
+				vm.matterData.teacherData = resul;
+			});
+
+			//ordeno los datos a usar en el apiP
+			var programData = vm.matterData.institucion +"_"+ vm.matterData.escuela +"_"+ vm.matterData.programa;
+			//obtiene el programa de esa institucion, escuela, programa
+			Matters.getPrograma(programData)
+			.success( function(result){
+				vm.matterData.mallas = result;
+			});
+
+			vm.processing = false;
+		});
+
+		
+
+		// funcion para actualizar el curso
+		vm.actualizarCurso = function() {
+			vm.processing = true;
+			vm.message = '' ;
+
+			//ordeno los datos
+			var data = {};
+			data.id = vm.matterData._id;
+			data.institucion = vm.matterData.institucion;
+			data.escuela = vm.matterData.escuela;
+			data.programa = vm.matterData.programa;
+			data.materia = vm.matterData.materias.materia;
+			data.profesor = vm.matterData.profesores.nombre;
+			data.grupo = vm.matterData.grupo;
+			data.periodo = vm.matterData.periodo;
+
+			// llama al matterService para actualizar
+			Matters.actualizarCurso(data)
+			.success( function(resul) {
+				vm.processing = false;
+				vm.message = resul.message;
+
+
+				//refresco los valores de los campos
+				vm.matterData.materia = data.materia;
+				vm.matterData.profesor = data.profesor;
+				vm.matterData.grupo = data.grupo;
+				vm.matterData.periodo = data.periodo;
+			});
+		};
+
+	})

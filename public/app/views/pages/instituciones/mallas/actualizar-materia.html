@@ -1,0 +1,52 @@
+<div class="jumbotron" >
+
+<h1> Editar Materia</h1>
+
+
+<div>
+		
+	<form ng-submit="program.actualizarMateria()">
+		<p>
+			<label>Institución:</label>
+			<label>{{ program.programData.institucion }}</label>
+		</p>
+		<p>
+			<label>Escuela:</label>
+			<label>{{ program.programData.escuela }}</label>
+		</p>
+		<p>
+			<label>Programa:</label>
+			<label>{{ program.programData.programa }}</label>
+		</p>
+		<p>
+			<label>Materia:</label>
+			<label>{{ program.programData.materia }}</label>
+		</p>
+		<p>
+			<label>Nuevo Valor:</label>
+
+			<input type="text" name="nuevaMateria" #nuevoPrograma="ngModel" ng-model="program.programData.nuevaMateria" required placeholder="Nombre materia">
+		</p>
+
+		<div class="form-group" >
+			<div class="col-sm-6" >
+				<button type="submit" class="btn btn-success btn-lg btn-block">Actualizar</button>
+			</div>
+		</div>
+		
+		
+	</form>
+	
+	<div class="row show-hide-message" ng-show="program.message" >
+	<div class="col-sm-6 col-sm-offset-1" >
+
+	<div class="alert alert-info" >
+		{{ program.message }}
+	</div>
+
+	</div>
+	</div>
+</div>
+
+
+</div>

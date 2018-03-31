@@ -3,7 +3,6 @@ angular.module( 'instituteCtrl' , [ 'instituteService' ])
 
 	.controller('instituteController' , function(Institutions){
 		var vm = this;
-		console.log('');
 
 		// establece la variable processing para mostrar las varas de carga
 		vm.processing = true;
@@ -53,7 +52,8 @@ angular.module( 'instituteCtrl' , [ 'instituteService' ])
 
 			// limpia el mensaje
 			vm.message = '' ;
-
+			console.log("holaaa");
+			console.log(vm.instituteData);
 			// usa la funcion de crear en studentService
 			Institutions.create(vm.instituteData)
 			.success( function(data) {
@@ -103,5 +103,123 @@ angular.module( 'instituteCtrl' , [ 'instituteService' ])
 			});
 		};
 
+	})
+
+
+	//###################################################################################################################
+	.controller('schoolController' , function(Institutions){
+		var vm = this;
+
+		// establece la variable processing para mostrar las varas de carga
+		vm.processing = true;
+
+		// carga todas las escuelas y su institución
+		Institutions.nombresInstituciones()
+		.success( function(data) {
+			vm.processing = false;
+			vm.instituteData = data;
+		});
+		
+		// funcion para borrar una escuela de la institución
+		vm.borrarEscuela = function(institucion, escuela) {
+			vm.processing = true;
+
+			//mando un string con los valores separados por -
+			//para luego sacarlos con split
+			vm.borrar = institucion +"-"+escuela;
+
+			Institutions.borrarEscuela(vm.borrar)
+			.success(function(data) {
+				vm.processing = false;
+
+				//refresco los valores
+				Institutions.nombresInstituciones()
+				.success( function(data) {
+					vm.processing = false;
+					vm.instituteData = data;
+				});
+			});
+		};
+	})
+
+	// controlador para CREAR UNA ESCUELA dentro de una institución existente
+	.controller( 'schoolCreateController' , function(Institutions) {
+
+		var vm = this;
+
+		// variable para mostrar/ocultar los elementos de la vista
+		// es lo que diferencia entre crear o editar en el html
+		vm.type = 'create' ;
+
+		// obtiene el parametro con la informacion de instituciones
+		Institutions.nombresInstituciones()
+		.success( function(data) {
+			vm.instituteData = data;
+		});
+
+
+		vm.data = {};
+
+		// funcion para guardar la nueva escuela 
+		vm.guardarEscuela = function() {
+			vm.processing = true;
+			vm.message = '' ;
+
+
+			// llama al instituteService para actualizar
+			Institutions.crearEscuela(vm.data)
+			.success( function(data) {
+				vm.processing = false;
+				vm.message = data.message;
+			});
+		};
+
+	})
+
+	// controlador para EDITAR UNA ESCUELA dentro de una institución existente
+	.controller( 'schoolEditController' , function(Institutions) {
+
+		var vm = this;
+
+		// variable para mostrar/ocultar los elementos de la vista
+		// es lo que diferencia entre crear o editar en el html
+		vm.type = 'edit' ;
+
+		// obtiene el parametro con la informacion de instituciones
+		Institutions.nombresInstituciones()
+		.success( function(data) {
+			vm.instituteData = data;
+		});
+
+
+		vm.data = {};
+
+		// funcion para guardar la nueva escuela 
+		vm.guardarEscuela = function() {
+			vm.processing = true;
+			vm.message = '' ;
+
+
+			// llama al instituteService para actualizar
+			Institutions.actualizarEscuela(vm.data)
+			.success( function(data) {
+				vm.processing = false;
+				vm.message = data.message;
+
+
+				//refresco los valores de los campos
+				Institutions.nombresInstituciones()
+				.success( function(data) {
+					vm.instituteData = data;
+				});
+				vm.data.instituciones = undefined;
+				vm.data.escuelas = undefined;
+				vm.data.nuevaEscuela = "";
+			});
+		};
+
 	});
+
+
+	//###################################################################################################################
 	

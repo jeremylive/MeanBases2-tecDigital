@@ -7,19 +7,7 @@ var schemaInstituciones = new Schema(
 {
 	institucionAcademica:{type: String, required: true},
 	escuelas: [new Schema({
-		escuela:{type:String, required:true},
-		programasAcademicos:[new Schema({
-			programa:{type:String, required:true},
-			plan:{type:Number, required:true},
-			mallaCurricular:[new Schema({
-				materias:[new Schema({
-					materia:{type:String, required:true}
-				})
-				]	
-			})
-			]
-		})
-		]
+		escuela:{type:String, required:true}
 	})
 	]
 });

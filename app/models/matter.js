@@ -5,16 +5,16 @@ var bcrypt = require( 'bcrypt-nodejs' );
 
 var schemaCursos = new Schema(
 {
-	codigoCurso:{type: String, required: true},
-	nombreCurso:{type: String, required: true},
-	numeroCurso:{type: Number, required: true},
-	profesor:{type: String, required: true},
-	escuelaPertenece:{type: String, required: true},
-	programaEscuela:{type: String, required: true},
-	plan:{type: String, required: true},
+	institucion:{type: String, required: true},
+	escuela:{type: String, required: true},
+	programa:{type: Number, required: true},
+	profesor: String,
+	materia: {type: String, required: true},
+	grupo: {type: Number, required: true},
+	periodo:{type: String, required: true},
 	estudiantes:[new Schema({
 		estudiante:{type:String, required:true}
 	})]
 });
 
-module.exports = mongoose.model('Matter', schemaCursos);
+module.exports = mongoose.model('Cursos', schemaCursos);

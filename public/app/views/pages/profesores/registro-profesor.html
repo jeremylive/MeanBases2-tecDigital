@@ -1,7 +1,7 @@
 <div class="jumbotron" >
 
 <h1 ng-if="teacher.type == 'create'" > Registro Profesor</h1>
-<h1 ng-if="teacher.type == 'edit'" > Editar Usuario</h1>
+<h1 ng-if="teacher.type == 'edit'" > Editar Profesor</h1>
 
 
 <div>
@@ -34,7 +34,7 @@
 		</p>
 		<p>
 			<label>Curso:</label>
-		   	<input type="text" name="curso" #curso="ngModel" ng-model="teacher.teacherData.curso" 
+		   	<input type="text" name="cruso" #curso="ngModel" ng-model="teacher.teacherData.curso" 
 				placeholder="Ejm: Bases II">
 		   	<!--span *ngIf="programaAcademico.touched && !programaAcademico.valid" >Escriba su programa academico</span-->
 		</p>

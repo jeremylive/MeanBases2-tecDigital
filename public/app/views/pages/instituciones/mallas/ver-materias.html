@@ -1,0 +1,55 @@
+<div class="page-header" >
+<h1>
+	Malla Curricular
+	<input type="text" name="materia" #nombre="ngModel" ng-model="program.programData.materia" placeholder="Nombre materia">
+	<a href="#" ng-click="program.agregarMateria(materia)" class="btn btn-default" >
+		<span class="glyphicon glyphicon-plus" > </span>
+		Agregar Materia
+	</a>
+	<h5>
+		<p>
+			<label class="col-sm-4 control-label" > Institución: {{program.programData.institucion}}</label>
+			<label class="col-sm-6 control-label" > Escuela: {{program.programData.escuela}}</label>
+		</p>
+		<p>
+			<label class="col-sm-4 control-label" > Programa: {{program.programData.programa}}</label>
+		</p>
+	</h5>
+	
+</h1>
+
+</div>
+
+
+
+
+
+<!-- MENSAJE DE CARGA -->
+<div class="jumbotron text-center" ng-show="program.processing" >
+	<span class="glyphicon glyphicon-repeat spinner" > </span>
+	<p> Cargando información... </p>
+</div>
+
+<table class="table table-bordered table-striped" ng-show="program.programData" >
+	<thead>
+	<tr>
+		<th> Materia</th>
+		<th class="col-sm-1" > </th>
+	</tr>
+	</thead>
+
+	<tbody>
+
+	<tr>
+		<tr ng-repeat="materias in program.programData.mallaCurricular">
+			<td> {{ materias.materia }} </td>	
+			<td class="col-sm-2" >
+				<a href="#" ng-click="program.borrarMateria(materias.materia)" class="btn btn-danger"> Borrar</a>
+				<a href="/instituciones/ver-malla/actualizar-materia/{{program.programData._id}}_{{materias.materia}}" 
+					class="btn btn-primary"> Editar</a>
+			</td>
+		</tr>
+	</tr>
+
+	</tbody>
+</table>

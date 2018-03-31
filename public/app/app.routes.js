@@ -47,6 +47,14 @@ angular.module( 'app.routes' , [ 'ngRoute' ])
 	})
 	
 	//---------------------------------ESTUDIANTES----------------------------------------
+	// matricula estudiante
+/*	.when( '/students/matricula-estudiante' , {
+		templateUrl : 'app/views/pages/estudiantes/matricula-estudiante.html' ,
+		controller : 'studentCreateController' ,
+		controllerAs: 'student'
+	})
+*/
+
 	// registro de estudiante
 	.when( '/students/registro-estudiante' , {
 		templateUrl : 'app/views/pages/estudiantes/registro-estudiante.html' ,
@@ -74,7 +82,13 @@ angular.module( 'app.routes' , [ 'ngRoute' ])
 		controller : 'studentEditController' ,
 		controllerAs: 'student'
 	})
-	
+
+	// EDITAR matricula estudiante
+	.when( '/students/matricula/:student_id' , {
+		templateUrl : 'app/views/pages/estudiantes/matricula-estudiante.html' ,
+		controller : 'studentMatricularController' ,
+		controllerAs: 'student'
+	})	
 	//---------------------------------INSTITUCIONES----------------------------------------
 	// registro de institucion
 	.when( '/instituciones/registro-institucion' , {
@@ -89,7 +103,97 @@ angular.module( 'app.routes' , [ 'ngRoute' ])
 		controller : 'instituteController' ,
 		controllerAs: 'institute'
 	})
-	
+
+
+	//---------------------------------ESCUELAS----------------------------------------
+	// ver todas las escuelas
+	.when( '/instituciones/ver-escuelas' , {
+		templateUrl : 'app/views/pages/instituciones/escuelas/ver-escuelas.html' ,
+		controller : 'schoolController' ,
+		controllerAs: 'institution'
+	})
+
+	// registro de escuela
+	.when( '/instituciones/registro-escuela' , {
+		templateUrl : 'app/views/pages/instituciones/escuelas/registro-escuela.html' ,
+		controller : 'schoolCreateController' ,
+		controllerAs: 'institution'
+	})
+
+	// actualizar escuela
+	.when( '/instituciones/actualizar-escuela' , {
+		templateUrl : 'app/views/pages/instituciones/escuelas/registro-escuela.html' ,
+		controller : 'schoolEditController' ,
+		controllerAs: 'institution'
+	})
+
+	//---------------------------------PROGRAMAS----------------------------------------
+	// ver todos los programas
+	.when( '/instituciones/ver-programas' , {
+		templateUrl : 'app/views/pages/instituciones/programas/ver-programas.html' ,
+		controller : 'programController' ,
+		controllerAs: 'program'
+	})
+
+	// registro de programa
+	.when( '/instituciones/registro-programa' , {
+		templateUrl : 'app/views/pages/instituciones/programas/registro-programa.html' ,
+		controller : 'programCreateController' ,
+		controllerAs: 'program'
+	})
+
+	// actualizar programa
+	.when( '/instituciones/actualizar-programa/:program_id' , {
+		templateUrl : 'app/views/pages/instituciones/programas/registro-programa.html' ,
+		controller : 'programEditController' ,
+		controllerAs: 'program'
+	})
+
+	//------------------------------MALLAS ACADÉMICAS------------------------------------
+	// ver la malla de un programa
+	.when( '/instituciones/ver-malla/:program_id' , {
+		templateUrl : 'app/views/pages/instituciones/mallas/ver-materias.html' ,
+		controller : 'mallaController' ,
+		controllerAs: 'program'
+	})
+
+	// ver la malla de un programa
+	.when( '/instituciones/ver-malla/actualizar-materia/:programData' , {
+		templateUrl : 'app/views/pages/instituciones/mallas/actualizar-materia.html' ,
+		controller : 'mallaEditController' ,
+		controllerAs: 'program'
+	})
+
+
+
+
+
+	//---------------------------------CURSOS----------------------------------------
+	// ver todos los cursos
+	.when( '/cursos/ver-cursos' , {
+		templateUrl : 'app/views/pages/cursos/ver-cursos.html' ,
+		controller : 'matterController' ,
+		controllerAs: 'matter'
+	})
+
+	// registro de curso
+	.when( '/cursos/registro-curso' , {
+		templateUrl : 'app/views/pages/cursos/registrar-curso.html' ,
+		controller : 'matterCreateController' ,
+		controllerAs: 'matter'
+	})
+
+	// edicion de curso
+	.when( '/cursos/:id' , {
+		templateUrl : 'app/views/pages/cursos/actualizar-curso.html' ,
+		controller : 'matterEditController' ,
+		controllerAs: 'matter'
+	})
+
+
+	//---------------------------------------------------------------------
+	// ESTOS EDIT DEBEN ESTAR DE ÚLTIMOS!!!
+
 	// datos de institucion
 	.when( '/institucion/:name' , {
 		templateUrl : 'app/views/pages/instituciones/ver-institucion.html' ,
@@ -103,35 +207,7 @@ angular.module( 'app.routes' , [ 'ngRoute' ])
 		controller : 'instituteEditController' ,
 		controllerAs: 'institute'
 	})
-
-	//---------------------------------CURSOS----------------------------------------
-	// registro de curso
-	.when( '/matters/registro-curso' , {
-		templateUrl : 'app/views/pages/cursos/registro-curso' ,
-		controller : 'matterCreateController' ,
-		controllerAs: 'matter'
-	})
 	
-	// ver todos los cursos
-	.when( '/matters/ver-cursos' , {
-		templateUrl : 'app/views/pages/cursos/ver-cursos.html' ,
-		controller : 'matterController' ,
-		controllerAs: 'matter'
-	})
-	
-	// datos de curso
-	.when( '/matter/:name' , {
-		templateUrl : 'app/views/pages/cursos/ver-curso.html' ,
-		controller : 'matterEditController' ,
-		controllerAs: 'matter'
-	})
-	
-	// edicion de curso
-	.when( '/matters/:name' , {
-		templateUrl : 'app/views/pages/cursos/registro-curso.html' ,
-		controller : 'matterEditController' ,
-		controllerAs: 'matter'
-	})
 	
 	
 	
@@ -141,7 +217,7 @@ angular.module( 'app.routes' , [ 'ngRoute' ])
         redirectTo: '/'
     });
 
-	// para liberarse del hash en el url
+	
 	$locationProvider.html5Mode(true);
 
 });

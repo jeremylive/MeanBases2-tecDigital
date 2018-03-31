@@ -1,0 +1,55 @@
+<div class="jumbotron" >
+
+<h1 ng-if="institution.type == 'create'" > Registro Escuela</h1>
+<h1 ng-if="institution.type == 'edit'" > Actualizar Escuela</h1>
+
+
+<div>
+		
+	<form ng-submit="institution.guardarEscuela()">
+		<p>
+			<label>Institución:</label>
+			<select name="institucion" ng-model="institution.data.instituciones" ng-options="instituciones.institucionAcademica for instituciones in institution.instituteData" required>
+			</select>
+		</p>
+		<p>
+			<label>Escuela:</label>
+			
+			<input ng-if="institution.type == 'create'" type="text" name="escuela" #nombre="ngModel" ng-model="institution.data.escuela" required placeholder="Ejm: Ingeniería en Computación">
+
+			<select ng-if="institution.type == 'edit'" name="escuela" ng-model="institution.data.escuelas" ng-options="escuelas.escuela for escuelas in institution.data.instituciones.escuelas" required>
+			</select>
+		</p>
+		<p>
+			<label ng-if="institution.type == 'edit'" >Nuevo Valor:</label>
+			
+			<input ng-if="institution.type == 'edit'" type="text" name="nuevaEscuela" #nuevaEscuela="ngModel" ng-model="institution.data.nuevaEscuela" required placeholder="Ejm: Ingeniería en Computación">
+		</p>
+
+		<div class="form-group" >
+			<div class="col-sm-6" >
+				<button type="submit"
+					class="btn btn-success btn-lg btn-block"
+				ng-if="institution.type == 'create'" >Guardar</button>
+				<button type="submit"
+					class="btn btn-success btn-lg btn-block"
+				ng-if="institution.type == 'edit'" >Actualizar</button>
+			</div>
+		</div>
+		
+		
+	</form>
+	
+	<div class="row show-hide-message" ng-show="institution.message" >
+	<div class="col-sm-6 col-sm-offset-1" >
+
+	<div class="alert alert-info" >
+		{{ institution.message }}
+	</div>
+
+	</div>
+	</div>
+</div>
+
+
+</div>
